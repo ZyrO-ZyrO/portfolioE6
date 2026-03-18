@@ -3,116 +3,434 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio – Irache Mahamoudou</title>
+  <title>Portfolio · Prénom Nom · BTS SIO SLAM</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
+  <!-- Canvas étoiles -->
+  <canvas id="stars-canvas"></canvas>
+
+  <!-- Blobs ambiants -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <!-- Progress bar -->
+  <div id="scroll-progress"></div>
+
   <!-- ══════════════════════════════
-       NAVIGATION
+       NAV — pill centré
   ══════════════════════════════ -->
   <nav id="navbar">
-    <div class="container nav-inner">
-      <a class="nav-logo" href="#accueil">PF</a>
+    <div class="nav-pill">
+      <a href="#accueil" class="nav-logo">PN</a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#accueil" class="active">Accueil</a></li>
+        <li><a href="#formation">Formation</a></li>
+        <li><a href="#parcours">Parcours</a></li>
+        <li><a href="#experience">Expérience</a></li>
+        <li><a href="#projets">Projets</a></li>
+        <li><a href="#competences">Compétences</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#veille">Veille</a></li>
+      </ul>
+
+      <a href="#contact" class="nav-cta">Me contacter →</a>
+
       <button class="nav-burger" id="burger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
-      <ul class="nav-links" id="nav-links">
-        <li><a href="#accueil">Accueil</a></li>
-        <li><a href="#apropos">À propos</a></li>
-        <li><a href="#parcours">Parcours</a></li>
-        <li><a href="#competences">Compétences</a></li>
-        <li><a href="#stages">Stages</a></li>
-        <li><a href="#realisations">Réalisations</a></li>
-        <li><a href="#veille">Veille</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
     </div>
   </nav>
 
   <!-- ══════════════════════════════
-       HERO / ACCUEIL
+       HERO
   ══════════════════════════════ -->
   <section id="accueil" class="hero">
-    <div class="hero-bg-glow"></div>
-    <div class="container hero-inner">
-      <div class="hero-text">
-        <p class="hero-greeting">Bienvenue sur mon Portfolio</p>
-        <h1 class="hero-name">
-          Irache<br /><span>Mahamoudou</span>
-        </h1>
-        <p class="hero-role">Étudiant BTS SIO · Option SLAM</p>
-        <div class="hero-cta">
-          <a class="btn btn--primary" href="#apropos">Découvrir</a>
-          <a class="btn btn--ghost" href="docs/cv.pdf" target="_blank">Télécharger CV</a>
+    <div class="hero-content">
+
+      <!-- Badge pill -->
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        BTS SIO – Option SLAM
+      </div>
+
+      <!-- Titre énorme -->
+      <h1 class="hero-title">
+        Développeur web<br />
+        <span class="hero-highlight">passionné.</span>
+      </h1>
+
+      <!-- Sous-titre -->
+      <p class="hero-sub">
+        Bonjour, je suis <strong>Irache Mahamoudou</strong>,
+        <span id="tw-text" class="hero-tw"></span><span class="tw-cursor"></span>
+      </p>
+
+      <!-- CTA -->
+      <div class="hero-cta">
+        <a href="#formation" class="btn btn-primary">Découvrir mon parcours →</a>
+        <a href="docs/cv.pdf" class="btn btn-ghost" target="_blank">Voir mon CV</a>
+      </div>
+
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-num" data-target="2" data-suffix=" ans">0</span>
+          <span class="stat-label">Formation BTS</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="hero-stat">
+          <span class="stat-num" data-target="4" data-suffix="+ projets">0</span>
+          <span class="stat-label">Réalisations</span>
+        </div>
+        <div class="stat-sep"></div>
+        <div class="hero-stat">
+          <span class="stat-num" data-target="2" data-suffix=" stages">0</span>
+          <span class="stat-label">En entreprise</span>
         </div>
       </div>
-      <div class="hero-img-wrap">
-        <div class="hero-img-placeholder">
-          <span><img src="télécharger.png" alt=""></span>
-        </div>
-      </div>
+
     </div>
-    <a href="#apropos" class="scroll-hint" aria-label="Défiler">&#8595;</a>
+
+    <a href="#formation" class="scroll-hint">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
   </section>
 
   <!-- ══════════════════════════════
-       À PROPOS
+       FORMATION / BTS SIO
   ══════════════════════════════ -->
-  <section id="apropos">
+  <section id="formation">
     <div class="container">
-      <p class="section-label">Qui suis-je ?</p>
-      <h2 class="section-title">À propos de moi</h2>
-      <div class="about-grid">
-        <div class="about-text">
+      <div class="section-badge reveal">
+        <span>★ PARCOURS ACADÉMIQUE</span>
+      </div>
+      <h2 class="section-title-big reveal">
+        Ma formation, le <span class="cyan-text">BTS</span> <span class="magenta-text">SIO.</span>
+      </h2>
+      <p class="section-sub reveal">Une formation technique en informatique, se divisant en deux spécialités.</p>
+
+      <!-- Cartes SLAM / SISR -->
+      <div class="bts-duo reveal">
+
+        <div class="bts-big-card bts-slam">
+          <div class="bts-card-badge">SLAM</div>
+          <h3>Solutions Logicielles et<br />Applications Métiers</h3>
           <p>
-            Bonjour, je m'appelle <strong>Irache Mahamoudou</strong> !
+            Cette spécialisation se concentre sur la conception, le développement et la
+            maintenance d'applications informatiques. Les étudiants apprennent à créer
+            des logiciels sur-mesure en utilisant les dernières technologies et pratiques
+            de développement.
           </p>
-          <p>
-            Actuellement étudiant en <strong>BTS SIO</strong> (Services Informatiques aux
-            Organisations), option <strong>SLAM</strong> (Solutions Logicielles et Applications
-            Métiers), je me forme dans le domaine du développement web, des bases de données
-            et des systèmes d'information.
-          </p>
-          <p>
-            Ce portfolio est l'espace où vous découvrirez mon parcours scolaire et les
-            différents projets réalisés au cours de ma formation, qu'ils soient personnels
-            ou professionnels.
-          </p>
-          <a class="btn btn--primary" href="docs/cv.pdf" target="_blank">Télécharger mon CV</a>
+          <ul>
+            <li>Développement d'applications web et mobiles</li>
+            <li>Cycle de vie, de la conception à la mise en production</li>
+            <li>Programmation orientée objet et architecture logicielle</li>
+            <li>Gestion de bases de données relationnelles et NoSQL</li>
+            <li>Optimisation des performances des applications</li>
+          </ul>
+          <span class="bts-my-option">✦ Mon option</span>
         </div>
 
-        <!-- BTS SIO expliqué -->
-        <div class="about-bts">
-          <p class="subsection-label">Qu'est-ce que le BTS SIO ?</p>
-          <p class="about-bts-intro">
-            Le <strong>Brevet de Technicien Supérieur – Services Informatiques aux
-            Organisations</strong> est un diplôme Bac+2 qui forme aux métiers de l'informatique.
-            Il existe deux options :
+        <div class="bts-sep"></div>
+
+        <div class="bts-big-card bts-sisr">
+          <div class="bts-card-badge">SISR</div>
+          <h3>Solutions d'Infrastructure,<br />Systèmes et Réseaux</h3>
+          <p>
+            La spécialisation SISR est centrée sur l'administration des infrastructures
+            réseaux et systèmes. Les étudiants apprennent à déployer et maintenir des
+            systèmes, à administrer des serveurs et à assurer la sécurité des données
+            au sein des entreprises.
           </p>
-          <div class="bts-cards">
-            <div class="bts-card bts-card--active">
-              <span class="bts-tag">Mon option</span>
-              <h4 class="bts-card-title">SLAM</h4>
-              <p class="bts-card-sub">Solutions Logicielles et Applications Métiers</p>
-              <p class="bts-card-desc">
-                Conception et développement d'applications web et mobiles, gestion de bases
-                de données, algorithmique et intégration de solutions logicielles.
-              </p>
+          <ul>
+            <li>Sécurisation des systèmes et des réseaux</li>
+            <li>Virtualisation des infrastructures et gestion de serveurs</li>
+            <li>Administration des réseaux, systèmes et bases de données</li>
+            <li>Maintenance préventive et gestion des incidents</li>
+            <li>Gestion des solutions d'infrastructures réseaux complexes</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       PARCOURS SCOLAIRE
+  ══════════════════════════════ -->
+  <section id="parcours">
+    <div class="container">
+      <div class="section-badge reveal"><span>★ PARCOURS SCOLAIRE</span></div>
+      <h2 class="section-title-big reveal">Mon <span class="cyan-text">parcours.</span></h2>
+
+      <div class="timeline">
+
+        <div class="timeline-entry">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-card">
+            <div class="tc-header">
+              <div class="tc-logo">
+                <img src="img/lycee-ozenne-logo.png" alt="Logo BTS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <div class="logo-fallback">BTS</div>
+              </div>
+              <div>
+                <h3 class="tc-title">BTS SIO – Option SLAM</h3>
+                <p class="tc-sub">Solutions Logicielles et Applications Métiers</p>
+                <p class="tc-mention">En cours – 2025</p>
+                <p class="tc-school">
+                  <a href="#" target="_blank">Lycée Ozenne</a> · Toulouse
+                </p>
+              </div>
             </div>
-            <div class="bts-card">
-              <h4 class="bts-card-title">SISR</h4>
-              <p class="bts-card-sub">Solutions d'Infrastructure, Systèmes et Réseaux</p>
-              <p class="bts-card-desc">
-                Administration des systèmes et réseaux, cybersécurité, gestion des serveurs
-                et maintenance des infrastructures informatiques.
+            <ul class="tc-skills">
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg>
+                Développement web – HTML, CSS, JS, PHP, Java, Kotlin, C#, Python
+              </li>
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Bases de données – MySQL, PostgreSQL
+              </li>
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Algorithmique et gestion de projets
+              </li>
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                Virtualisation et systèmes
+              </li>
+            </ul>
+            <p class="tc-desc">
+              Ma formation en BTS SIO SLAM m'a permet d'acquérir des compétences solides en
+              développement d'applications, gestion de bases de données et intégration de
+              solutions logicielles adaptées aux besoins des entreprises.
+            </p>
+            <div class="tc-stages">
+              <p class="tc-stages-title">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                STAGES RÉALISÉS
               </p>
+              <ul class="tc-stages-list">
+                <li><span class="stage-dot"></span><div><strong>AppYuser · Toulouse</strong><span>6 semaines · 2ᵉ année</span></div></li>
+                <li><span class="stage-dot"></span><div><strong>AppYuser · Toulouse</strong><span>5 semaines · 1ʳᵉ année</span></div></li>
+              </ul>
             </div>
           </div>
         </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-card">
+            <div class="tc-header">
+              <div class="tc-logo">
+                <img src="img/lycee-ozenne-logo.png" alt="Lycée Ozenne" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <div class="logo-fallback">BAC</div>
+              </div>
+              <div>
+                <h3 class="tc-title">Baccalauréat STMG</h3>
+                <p class="tc-sub">Sciences et Technologies du Management et de la Gestion</p>
+                <p class="tc-mention">Obtenu – 2023</p>
+                <p class="tc-school">Lycée Ozenne · Toulouse</p>
+              </div>
+            </div>
+            <ul class="tc-skills">
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+                Systèmes d'information et de gestion
+              </li>
+              <li>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+                Découverte des outils numériques
+              </li>
+            </ul>
+            <p class="tc-desc">
+Attiré initialement par l'économie, j'ai choisi la filière STMG. Ma découverte de la spécialité SIG a ensuite été déterminante :
+ elle a transformé cet intérêt pour le fonctionnement des organisations en une véritable passion pour l'informatique, ainsi faire un lien entre les deux l'économie gestion ainsi que l'informatique.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-entry">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-card">
+            <div class="tc-header">
+
+              <div class="tc-logo">
+                <img src="img/croppedimage-50d9b04716c3450b848cde0f55ece5cd.webp" alt="Lycée Ozenne" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <div class="logo-fallback">BRV</div></div>
+              <div>
+                <h3 class="tc-title">Brevet des collèges</h3>
+                <p class="tc-mention">Obtenu – 2020</p>
+                <p class="tc-school">Lycée Pierre de Fermat · Toulouse</p>
+              </div>
+            </div>
+            <p class="tc-desc">
+              Premiers intérêts pour l'économie et la finance.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       EXPÉRIENCE
+  ══════════════════════════════ -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-badge reveal"><span>★ TERRAIN</span></div>
+      <h2 class="section-title-big reveal">Mes <span class="cyan-text">expériences.</span></h2>
+
+      <div class="exp-grid">
+
+        <div class="glass-card exp-card reveal">
+          <div class="exp-header">
+            <div class="exp-logo">
+              <img src="img/appyuser_logo.jpg" alt="Logo BTS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">E2</div></div>
+            <div>
+              <span class="exp-badge">2ᵉ année</span>
+              <h3 class="exp-company">AppYuser</h3>
+              <p class="exp-meta">Toulouse &nbsp;·&nbsp;12 Jan → 20 Fév 2025</p>
+            </div>
+          </div>
+          <p class="exp-desc">Description des missions, technologies utilisées et apports de ce stage de deuxième année.</p>
+          <ul class="exp-missions">
+            <li>Documentation des outils disponible pour le dévéloppement d'un tracker</li>
+            <li>Adaptation du tracker existant au fonctionnemnt des pages SPA</li>
+            <li>Documentation sur la méthode de déploiment du tracker sur des applications SPA</li>
+          </ul>
+          <div class="exp-foot">
+            <a href="docs/rapport de stage 2.pdf" class="btn-chip" target="_blank"> - Rapport de stage</a>
+          </div>
+        </div>
+
+        <div class="glass-card exp-card reveal">
+          <div class="exp-header">
+            <div class="exp-logo">
+              <img src="img/appyuser_logo.jpg" alt="Logo BTS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">E1</div></div>
+            <div>
+              <span class="exp-badge">1ʳᵉ année</span>
+              <h3 class="exp-company">Nom de l'entreprise</h3>
+              <p class="exp-meta">📍 Toulouse &nbsp;·&nbsp; Mai → Juin 2024</p>
+            </div>
+          </div>
+          <p class="exp-desc">Description des missions, technologies utilisées et apports de ce stage de première année.</p>
+          <ul class="exp-missions">
+            <li>Mission principale 1 réalisée</li>
+            <li>Mission principale 2 réalisée</li>
+          </ul>
+          <div class="exp-foot">
+            <a href="docs/Rapport d'activité AppYuser Irache.pdf" class="btn-chip" target="_blank"> - Rapport de stage</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════
+       PROJETS
+  ══════════════════════════════ -->
+  <section id="projets">
+    <div class="container">
+      <div class="section-badge reveal"><span>★ RÉALISATIONS</span></div>
+      <h2 class="section-title-big reveal">Mes <span class="magenta-text">projets.</span></h2>
+
+      <div class="projects-grid">
+
+        <div class="glass-card project-card reveal">
+          <div class="project-top">
+            <div class="project-icon"><div class="logo-fallback">AP1</div></div>
+            <div>
+              <h3 class="project-title">Titre du Projet AP1</h3>
+              <p class="project-cat">Catégorie · sous-catégorie</p>
+            </div>
+          </div>
+          <p class="project-desc">Description du projet, contexte, objectifs et technologies utilisées.</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">PHP</span>
+          </div>
+          <details class="project-details">
+            <summary><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg> Éléments de preuve</summary>
+            <ul class="proof-list">
+              <li>Élément de preuve 1</li><li>Élément de preuve 2</li>
+            </ul>
+          </details>
+          <a href="docs/projet-ap1.pdf" class="btn-chip" target="_blank">📄 Voir le document</a>
+        </div>
+
+        <div class="glass-card project-card reveal">
+          <div class="project-top">
+            <div class="project-icon"><div class="logo-fallback">AP2</div></div>
+            <div>
+              <h3 class="project-title">Titre du Projet AP2</h3>
+              <p class="project-cat">Catégorie · sous-catégorie</p>
+            </div>
+          </div>
+          <p class="project-desc">Description du projet, contexte, objectifs et technologies utilisées.</p>
+          <div class="project-tags">
+            <span class="tag">Python</span><span class="tag">MySQL</span><span class="tag">Java</span>
+          </div>
+          <details class="project-details">
+            <summary><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg> Éléments de preuve</summary>
+            <ul class="proof-list"><li>Élément de preuve 1</li></ul>
+          </details>
+          <a href="docs/projet-ap2.pdf" class="btn-chip" target="_blank">📄 Voir le document</a>
+        </div>
+
+        <div class="glass-card project-card reveal">
+          <div class="project-top">
+            <div class="project-icon"><div class="logo-fallback">AP3</div></div>
+            <div>
+              <h3 class="project-title">Titre du Projet AP3</h3>
+              <p class="project-cat">Catégorie · sous-catégorie</p>
+            </div>
+          </div>
+          <p class="project-desc">Description du projet, contexte, objectifs et technologies utilisées.</p>
+          <div class="project-tags">
+            <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
+          </div>
+          <details class="project-details">
+            <summary><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg> Éléments de preuve</summary>
+            <ul class="proof-list"><li>Élément de preuve 1</li><li>Élément de preuve 2</li></ul>
+          </details>
+          <a href="docs/projet-ap3.pdf" class="btn-chip" target="_blank">📄 Voir le document</a>
+        </div>
+
+        <div class="glass-card project-card reveal">
+          <div class="project-top">
+            <div class="project-icon"><div class="logo-fallback">AP4</div></div>
+            <div>
+              <h3 class="project-title">Titre du Projet AP4</h3>
+              <p class="project-cat">Catégorie · sous-catégorie</p>
+            </div>
+          </div>
+          <p class="project-desc">Description du projet, contexte, objectifs et technologies utilisées.</p>
+          <div class="project-tags">
+            <span class="tag">Laravel</span><span class="tag">Vue.js</span>
+          </div>
+          <details class="project-details">
+            <summary><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,18 15,12 9,6"/></svg> Éléments de preuve</summary>
+            <ul class="proof-list"><li>Élément de preuve 1</li></ul>
+          </details>
+          <a href="docs/projet-ap4.pdf" class="btn-chip" target="_blank">📄 Voir le document</a>
+        </div>
+
+      </div>
+
+      <div class="center-btn reveal">
+        <a href="docs/tableau-synthese.pdf" class="btn btn-primary" target="_blank">Voir le tableau de synthèse (TSRP*)</a>
       </div>
     </div>
   </section>
@@ -122,228 +440,139 @@
   ══════════════════════════════ -->
   <section id="competences">
     <div class="container">
-      <p class="section-label">Ce que je maîtrise</p>
-      <h2 class="section-title">Mes compétences</h2>
-      <div class="skills-grid">
+      <div class="section-badge reveal"><span>★ MAÎTRISE</span></div>
+      <h2 class="section-title-big reveal">Mes <span class="cyan-text">compétences.</span></h2>
 
-        <div class="skills-group">
-          <h3 class="skills-group-title">Langages</h3>
-          <div class="skills-list">
-            <span class="skill-badge">HTML / CSS</span>
-            <span class="skill-badge">JavaScript</span>
-            <span class="skill-badge">PHP</span>
-            <span class="skill-badge">Python</span>
-            <span class="skill-badge">SQL</span>
-            <span class="skill-badge">Java</span>
-          </div>
+      <div class="skills-group reveal">
+        <div class="skills-group-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16,18 22,12 16,6"/><polyline points="8,6 2,12 8,18"/></svg>
+          Développement Web
         </div>
-
-        <div class="skills-group">
-          <h3 class="skills-group-title">Frameworks & Outils</h3>
-          <div class="skills-list">
-            <span class="skill-badge">React</span>
-            <span class="skill-badge">Node.js</span>
-            <span class="skill-badge">Git / GitHub</span>
-            <span class="skill-badge">VS Code</span>
-            <span class="skill-badge">XAMPP</span>
-          </div>
-        </div>
-
-        <div class="skills-group">
-          <h3 class="skills-group-title">Bases de données</h3>
-          <div class="skills-list">
-            <span class="skill-badge">MySQL</span>
-            <span class="skill-badge">PostgreSQL</span>
-            <span class="skill-badge">PhpMyAdmin</span>
-          </div>
-        </div>
-
-        <div class="skills-group">
-          <h3 class="skills-group-title">Systèmes & Virtualisation</h3>
-          <div class="skills-list">
-            <span class="skill-badge">Windows</span>
-            <span class="skill-badge">Linux (Debian)</span>
-            <span class="skill-badge">Proxmox</span>
-            <span class="skill-badge">VirtualBox</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════
-       PARCOURS SCOLAIRE
-  ══════════════════════════════ -->
-  <section id="parcours">
-    <div class="container">
-      <p class="section-label">Mon histoire</p>
-      <h2 class="section-title">Parcours scolaire</h2>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <p class="timeline-date">2023 – Présent</p>
-          <h3 class="timeline-title">BTS SIO – Option SLAM</h3>
-          <p class="timeline-place">Établissement à renseigner · Toulouse</p>
-          <p class="timeline-desc">
-            Formation en Solutions Logicielles et Applications Métiers. Développement web,
-            bases de données, algorithmique et projets professionnels en entreprise.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <p class="timeline-date">2020 – 2023</p>
-          <h3 class="timeline-title">Baccalauréat STMG</h3>
-          <p class="timeline-place">Lycée Ozenne · Toulouse</p>
-          <p class="timeline-desc">
-            Sciences et Technologies du Management et de la Gestion. Découverte des
-            systèmes d'information et premières bases en logique numérique.
-          </p>
-        </div>
-
-        <div class="timeline-item">
-          <p class="timeline-date">2020 – 2021</p>
-          <h3 class="timeline-title">Brevet des collèges</h3>
-          <p class="timeline-place">Lycée Pierre de Fermat · Toulouse</p>
-          <p class="timeline-desc">
-            Obtention du brevet avec mention. Premiers intérêts pour l'informatique et
-            les matières scientifiques.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Certifications -->
-      <div class="certif-wrap">
-        <p class="subsection-label">Certifications</p>
-        <div class="certif-list">
-          <div class="certif-card">
-            <div class="certif-icon">✦</div>
-            <p class="certif-name">Certification PIX</p>
-            <p class="certif-desc">Compétences numériques reconnues par l'État.</p>
-          </div>
-          <div class="certif-card">
-            <div class="certif-icon">✦</div>
-            <p class="certif-name">SecNumAcadémie</p>
-            <p class="certif-desc">Sensibilisation à la cybersécurité – ANSSI.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════
-       STAGES
-  ══════════════════════════════ -->
-  <section id="stages">
-    <div class="container">
-      <p class="section-label">Expérience terrain</p>
-      <h2 class="section-title">Mes stages</h2>
-
-      <div class="stage-cards">
-
-        <div class="stage-card">
-          <div class="stage-header">
-            <div class="stage-logo-placeholder">Logo</div>
-            <div>
-              <h3 class="stage-company">Entreprise à renseigner</h3>
-              <p class="stage-location">📍 Toulouse, France</p>
+        <div class="skills-cards">
+          <div class="glass-card skill-card">
+            <div class="skill-icon">
+              <img src="img/91174838481320be811fa7da10a51fea.jpg" alt="Logo BTS" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">HT</div>
             </div>
-          </div>
-          <div class="stage-badge">2ᵉ année de BTS</div>
-          <p class="stage-dates">🗓 Janvier 2025 – Février 2025</p>
-          <p class="stage-desc">
-            Description du stage de deuxième année : missions effectuées, technologies
-            utilisées, apports professionnels et personnels.
-          </p>
-          <div class="stage-links">
-            <a href="#" class="btn btn--sm">Rapport de stage</a>
-          </div>
-        </div>
 
-        <div class="stage-card">
-          <div class="stage-header">
-            <div class="stage-logo-placeholder">Logo</div>
-            <div>
-              <h3 class="stage-company">Entreprise à renseigner</h3>
-              <p class="stage-location">📍 Toulouse, France</p>
-            </div>
+            <h4>HTML / CSS</h4><p>Structuration et responsive design.</p>
           </div>
-          <div class="stage-badge">1ʳᵉ année de BTS</div>
-          <p class="stage-dates">🗓 Mai 2024 – Juin 2024</p>
-          <p class="stage-desc">
-            Description du stage de première année : missions effectuées, technologies
-            utilisées, apports professionnels et personnels.
-          </p>
-          <div class="stage-links">
-            <a href="#" class="btn btn--sm">Rapport de stage</a>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">JS</div></div>
+            <h4>JavaScript</h4><p>DOM, API Fetch, animations.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">PHP</div></div>
+            <h4>PHP</h4><p>Back-end, sessions, formulaires.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">⚛</div></div>
+            <h4>React</h4><p>Composants, hooks, SPA.</p>
           </div>
         </div>
-
       </div>
 
-      <div class="stage-synthese">
-        <a href="docs/tableau_synthese.pdf" class="btn btn--ghost" target="_blank">
-          Voir le tableau de synthèse
-        </a>
+      <div class="skills-group reveal">
+        <div class="skills-group-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+          Bases de données
+        </div>
+        <div class="skills-cards">
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">MY</div></div>
+            <h4>MySQL</h4><p>Modélisation, SQL, procédures.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">PG</div></div>
+            <h4>PostgreSQL</h4><p>Base relationnelle avancée.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">PMA</div></div>
+            <h4>PhpMyAdmin</h4><p>Administration visuelle BDD.</p>
+          </div>
+        </div>
       </div>
 
+      <div class="skills-group reveal">
+        <div class="skills-group-title">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Systèmes & Outils
+        </div>
+        <div class="skills-cards">
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">GIT</div></div>
+            <h4>Git / GitHub</h4><p>Versioning et collaboration.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">VS</div></div>
+            <h4>VS Code</h4><p>IDE principal, extensions.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">PVE</div></div>
+            <h4>Proxmox</h4><p>Virtualisation et VMs.</p>
+          </div>
+          <div class="glass-card skill-card">
+            <div class="skill-icon"><div class="logo-fallback">🐧</div></div>
+            <h4>Linux</h4><p>Administration, Bash, services.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ══════════════════════════════
-       RÉALISATIONS
+       CERTIFICATIONS — Carrousel
   ══════════════════════════════ -->
-  <section id="realisations">
+  <section id="certifications">
     <div class="container">
-      <p class="section-label">Ce que j'ai construit</p>
-      <h2 class="section-title">Réalisations</h2>
-      <div class="projects-grid">
+      <div class="section-badge reveal"><span>★ CERTIFICATIONS</span></div>
+      <h2 class="section-title-big reveal">Mes <span class="magenta-text">certifications.</span></h2>
+      <p class="section-sub reveal">Découvrez les certifications que j'ai obtenues au fil de mon parcours.</p>
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">AP1</div>
-          <h3 class="project-title">Projet AP1</h3>
-          <p class="project-desc">Description courte du projet, technologies utilisées.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+      <div class="certif-carousel reveal">
+        <button class="certif-prev" id="certif-prev" aria-label="Précédent">‹</button>
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">AP2</div>
-          <h3 class="project-title">Projet AP2</h3>
-          <p class="project-desc">Description courte du projet, technologies utilisées.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+        <div class="certif-track" id="certif-track">
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">AP3</div>
-          <h3 class="project-title">Projet AP3</h3>
-          <p class="project-desc">Description courte du projet, technologies utilisées.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+          <!-- Certif 1 -->
+          <div class="certif-slide active">
+            <div class="certif-circle certif-clickable"
+                 data-certif-img="img/certif/pix.png"
+                 data-certif-name="Certification PIX"
+                 title="Cliquer pour agrandir">
+              <img src="img/certif/pix.png" alt="PIX"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="certif-circle-fallback">PIX</div>
+              <div class="certif-zoom-hint">🔍</div>
+            </div>
+            <h3 class="certif-name">Certification PIX</h3>
+            <p class="certif-desc">Compétences numériques reconnues par l'État français. Évaluation en ligne des compétences digitales.</p>
+          </div>
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">AP4</div>
-          <h3 class="project-title">Projet AP4</h3>
-          <p class="project-desc">Description courte du projet, technologies utilisées.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+          <!-- Certif 2 -->
+          <div class="certif-slide">
+            <div class="certif-circle certif-clickable"
+                 data-certif-img="img/certif/secnum.png"
+                 data-certif-name="SecNumAcadémie"
+                 title="Cliquer pour agrandir">
+              <img src="img/certif/secnum.png" alt="SecNum"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="certif-circle-fallback">ANSSI</div>
+              <div class="certif-zoom-hint">🔍</div>
+            </div>
+            <h3 class="certif-name">SecNumAcadémie</h3>
+            <p class="certif-desc">Sensibilisation à la cybersécurité par l'ANSSI. Parcours de formation aux bonnes pratiques de sécurité numérique.</p>
+          </div>
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">DB</div>
-          <h3 class="project-title">Base de données</h3>
-          <p class="project-desc">Modélisation et gestion d'une base de données relationnelle.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+          <!-- Ajoute d'autres certifs ici en copiant ce bloc -->
 
-        <a href="#" class="project-card">
-          <div class="project-logo-placeholder">+</div>
-          <h3 class="project-title">Autre projet</h3>
-          <p class="project-desc">Description courte du projet, technologies utilisées.</p>
-          <span class="project-link">Voir le document →</span>
-        </a>
+        </div>
 
+        <button class="certif-next" id="certif-next" aria-label="Suivant">›</button>
       </div>
+
+      <!-- Indicateurs -->
+      <div class="certif-dots" id="certif-dots"></div>
     </div>
   </section>
 
@@ -352,125 +581,206 @@
   ══════════════════════════════ -->
   <section id="veille">
     <div class="container">
-      <p class="section-label">Rester à jour</p>
-      <h2 class="section-title">Veille technologique</h2>
+      <div class="section-badge reveal"><span>★ RESTER À JOUR</span></div>
+      <h2 class="section-title-big reveal">Veille <span class="cyan-text">technologique.</span></h2>
 
-      <div class="veille-intro-card">
+      <!-- Intro -->
+      <div class="glass-card veille-intro reveal">
         <h3>Qu'est-ce que la veille technologique ?</h3>
         <p>
-          La veille technologique est un processus organisé de collecte, de traitement et
-          de diffusion d'informations sur des innovations techniques, produits, procédés
-          de fabrication, brevets, normes et concurrents dans un domaine donné. Son
-          objectif principal est d'anticiper les évolutions, d'identifier les opportunités
-          et de renforcer la compétitivité.
+          La veille technologique est un processus organisé de collecte, de traitement et de
+          diffusion d'informations sur les innovations techniques, les produits, brevets, normes
+          et concurrents dans un domaine donné. Son objectif est d'anticiper les évolutions,
+          identifier les opportunités et renforcer la compétitivité.
         </p>
-        <p class="veille-sources">Sources : <a href="https://www.zdnet.com" target="_blank">ZDNet</a> · <a href="https://www.developpez.com" target="_blank">Developpez.com</a></p>
+        <div class="veille-intro-foot">
+          <p class="veille-sources">
+            Sources :
+            <a href="https://www.zdnet.com" target="_blank">ZDNet</a> ·
+            <a href="https://www.developpez.com" target="_blank">Developpez.com</a> ·
+            <a href="https://news.ycombinator.com" target="_blank">Hacker News</a>
+          </p>
+          <button class="btn-chip" onclick="openSourcesModal()">Voir toutes mes sources →</button>
+        </div>
       </div>
 
-      <p class="subsection-label" style="margin-top:3rem;">Sujet : [Votre sujet de veille]</p>
+      <p class="veille-subject reveal">
+        Sujet : <span class="magenta-text">[Votre sujet de veille technologique]</span>
+      </p>
 
-      <div class="veille-themes">
-
-        <div class="veille-theme">
-          <div class="veille-theme-header">
-            <span class="veille-num">01</span>
-            <h3>Thème 1 – Titre du thème</h3>
-          </div>
-          <p>
-            Développez ici votre premier thème de veille technologique. Expliquez le
-            concept, son fonctionnement et son utilité dans le domaine informatique.
-          </p>
+      <!-- Thème 1 -->
+      <div class="glass-card veille-theme reveal">
+        <div class="veille-theme-head">
+          <span class="veille-num gradient-text-cyan">01</span>
+          <h3>Thème 1 – Qu'est-ce que [votre sujet] ?</h3>
         </div>
+        <p>
+          Développez ici votre premier thème. Expliquez le concept, son fonctionnement
+          et son utilité dans le domaine informatique ou dans votre spécialité SLAM.
+          N'hésitez pas à ajouter des définitions, des exemples concrets et des schémas.
+        </p>
+      </div>
 
-        <div class="veille-theme">
-          <div class="veille-theme-header">
-            <span class="veille-num">02</span>
-            <h3>Thème 2 – Avantages et inconvénients</h3>
-          </div>
+      <!-- Thème 2 -->
+      <div class="glass-card veille-theme reveal">
+        <div class="veille-theme-head">
+          <span class="veille-num gradient-text-cyan">02</span>
+          <h3>Thème 2 – Avantages et inconvénients</h3>
+        </div>
+        <div class="veille-table-wrap">
           <table class="veille-table">
             <thead>
-              <tr>
-                <th>✅ Avantages</th>
-                <th>❌ Inconvénients</th>
-              </tr>
+              <tr><th>✅ Avantages</th><th>❌ Inconvénients</th></tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Avantage 1</td>
-                <td>Inconvénient 1</td>
-              </tr>
-              <tr>
-                <td>Avantage 2</td>
-                <td>Inconvénient 2</td>
-              </tr>
-              <tr>
-                <td>Avantage 3</td>
-                <td>Inconvénient 3</td>
-              </tr>
+              <tr><td>Avantage principal 1</td><td>Inconvénient principal 1</td></tr>
+              <tr><td>Avantage principal 2</td><td>Inconvénient principal 2</td></tr>
+              <tr><td>Avantage principal 3</td><td>Inconvénient principal 3</td></tr>
+              <tr><td>Avantage principal 4</td><td>Inconvénient principal 4</td></tr>
             </tbody>
           </table>
         </div>
+      </div>
 
-        <div class="veille-theme">
-          <div class="veille-theme-header">
-            <span class="veille-num">03</span>
-            <h3>Thème 3 – Exemples et applications</h3>
-          </div>
-          <div class="veille-examples">
-            <div class="veille-example-card">
-              <div class="veille-example-logo">EX1</div>
-              <div>
-                <h4>Exemple 1</h4>
-                <p>Fournisseur / éditeur · Description courte de la solution.</p>
-              </div>
+      <!-- Thème 3 -->
+      <div class="glass-card veille-theme reveal">
+        <div class="veille-theme-head">
+          <span class="veille-num gradient-text-cyan">03</span>
+          <h3>Thème 3 – Exemples et acteurs du marché</h3>
+        </div>
+        <div class="veille-examples">
+          <div class="veille-example">
+            <div class="example-logo">
+              <img src="img/veille/exemple1.png" alt="Exemple 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">EX1</div>
             </div>
-            <div class="veille-example-card">
-              <div class="veille-example-logo">EX2</div>
-              <div>
-                <h4>Exemple 2</h4>
-                <p>Fournisseur / éditeur · Description courte de la solution.</p>
-              </div>
+            <div>
+              <h4>Nom de la solution / produit</h4>
+              <p>Fournisseur ou éditeur – Description courte de la solution et de son positionnement sur le marché.</p>
+            </div>
+          </div>
+          <div class="veille-example">
+            <div class="example-logo">
+              <img src="img/veille/exemple2.png" alt="Exemple 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">EX2</div>
+            </div>
+            <div>
+              <h4>Nom de la solution / produit</h4>
+              <p>Fournisseur ou éditeur – Description courte de la solution et de son positionnement sur le marché.</p>
+            </div>
+          </div>
+          <div class="veille-example">
+            <div class="example-logo">
+              <img src="img/veille/exemple3.png" alt="Exemple 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="logo-fallback">EX3</div>
+            </div>
+            <div>
+              <h4>Nom de la solution / produit</h4>
+              <p>Fournisseur ou éditeur – Description courte de la solution et de son positionnement sur le marché.</p>
             </div>
           </div>
         </div>
-
       </div>
+
     </div>
   </section>
+
+  <!-- ══════════════════════════════
+       MODAL IMAGE CERTIF
+  ══════════════════════════════ -->
+  <div class="modal-overlay" id="certif-modal">
+    <div class="certif-modal-box">
+      <div class="certif-modal-head">
+        <h3 id="certif-modal-title">Certification</h3>
+        <button class="modal-close" onclick="closeCertifModal()">✕</button>
+      </div>
+      <div class="certif-modal-body">
+        <img id="certif-modal-img" src="" alt="Certification" />
+        <div class="certif-modal-placeholder" id="certif-modal-placeholder">
+          <p>Image de la certification</p>
+          <p style="font-size:.8rem;color:var(--text-3);margin-top:.5rem">Remplace <code>img/certif/nom.png</code> par ta vraie image</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       MODAL SOURCES
+  ══════════════════════════════ -->
+  <div class="modal-overlay" id="sources-modal">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>Mes sources d'information</h3>
+        <button class="modal-close" onclick="closeSourcesModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <a href="https://www.zdnet.com" class="source-card" target="_blank">
+          <div>
+            <strong>ZDNet</strong>
+            <p>Technologies, cybersécurité et cloud</p>
+          </div>
+          <span>›</span>
+        </a>
+        <a href="https://www.lemondeinformatique.fr" class="source-card" target="_blank">
+          <div>
+            <strong>Le Monde Informatique</strong>
+            <p>Actualités IT et transformation numérique</p>
+          </div>
+          <span>›</span>
+        </a>
+        <a href="https://news.ycombinator.com" class="source-card" target="_blank">
+          <div>
+            <strong>Hacker News</strong>
+            <p>Actualités tech et développement</p>
+          </div>
+          <span>›</span>
+        </a>
+        <!-- Ajoute d'autres sources ici -->
+      </div>
+    </div>
+  </div>
 
   <!-- ══════════════════════════════
        CONTACT
   ══════════════════════════════ -->
   <section id="contact">
     <div class="container">
-      <p class="section-label">Me joindre</p>
-      <h2 class="section-title">Contact</h2>
-      <p class="contact-intro">
-        Vous avez une question ou souhaitez discuter ? Remplissez le formulaire
-        ci-dessous et je vous répondrai dans les plus brefs délais.
-      </p>
-      <form class="contact-form" id="contact-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Votre nom</label>
-            <input type="text" id="name" name="name" placeholder="Jean Dupont" required />
-          </div>
-          <div class="form-group">
-            <label for="email">Votre e-mail</label>
-            <input type="email" id="email" name="email" placeholder="jean@exemple.fr" required />
+      <div class="section-badge reveal"><span>★ ME JOINDRE</span></div>
+      <h2 class="section-title-big reveal">Me <span class="magenta-text">contacter.</span></h2>
+
+      <div class="contact-simple reveal">
+
+        <!-- Disponibilité -->
+        <div class="glass-card contact-status-card">
+          <div class="contact-status-dot"></div>
+          <div>
+            <p class="contact-status-label">Disponibilité</p>
+            <p class="contact-status-value">Disponible pour un stage</p>
+            <p class="contact-status-sub">BTS SIO SLAM · Toulouse · 2025</p>
           </div>
         </div>
-        <div class="form-group">
-          <label for="subject">Sujet</label>
-          <input type="text" id="subject" name="subject" placeholder="Objet de votre message" required />
+
+        <!-- Email copiable -->
+        <div class="glass-card contact-email-card" id="email-card" onclick="copyEmail()" title="Cliquer pour copier">
+          <div class="contact-email-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+          </div>
+          <div class="contact-email-content">
+            <p class="contact-email-label">Adresse e-mail</p>
+            <p class="contact-email-value" id="email-value">votre.email@exemple.fr</p>
+          </div>
+          <div class="contact-copy-btn" id="copy-btn">
+            <svg id="copy-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span id="copy-label">Copier</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Votre message…" required></textarea>
-        </div>
-        <button type="submit" class="btn btn--primary">Envoyer le message</button>
-        <p class="form-notice" id="form-notice"></p>
-      </form>
+
+      </div>
     </div>
   </section>
 
@@ -479,7 +789,8 @@
   ══════════════════════════════ -->
   <footer>
     <div class="container footer-inner">
-      <p>© 2025 Prénom Nom &mdash; Portfolio BTS SIO SLAM</p>
+      <p>© 2025 Prénom Nom · Portfolio BTS SIO SLAM</p>
+      <p class="footer-note">* TSRP – Tableau de Synthèse des Réalisations Professionnelles</p>
       <a href="#accueil" class="back-top" aria-label="Retour en haut">↑</a>
     </div>
   </footer>
