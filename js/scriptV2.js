@@ -1,133 +1,176 @@
 /* ============================================================
-   PORTFOLIO BTS SIO — Script thème "Terminal Luxe"
+   PORTFOLIO BTS SIO SLAM — Script principal
    ============================================================ */
 
-/* ── Curseur personnalisé ── */
-const dot  = document.createElement('div');
-const ring = document.createElement('div');
-dot.className  = 'cursor-dot';
-ring.className = 'cursor-ring';
-document.body.append(dot, ring);
+/* ══════════════════════════════════════════════════════════
+   1. FOND ÉTOILÉ ANIMÉ (Canvas)
+══════════════════════════════════════════════════════════ */
+const canvas = document.getElementById('stars-canvas');
+const ctx    = canvas.getContext('2d');
+let stars    = [];
 
-let mouseX = 0, mouseY = 0;
-let ringX  = 0, ringY  = 0;
-
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  dot.style.left = mouseX + 'px';
-  dot.style.top  = mouseY + 'px';
-});
-
-// Ring suit avec un léger décalage (lerp)
-function animateRing() {
-  ringX += (mouseX - ringX) * .12;
-  ringY += (mouseY - ringY) * .12;
-  ring.style.left = ringX + 'px';
-  ring.style.top  = ringY + 'px';
-  requestAnimationFrame(animateRing);
+function resizeCanvas() {
+  canvas.width  = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
-animateRing();
 
-/* ── Numéros de section (data-num) ── */
-const sectionNums = {
-  'accueil':      '01',
-  'apropos':      '02',
-  'competences':  '03',
-  'parcours':     '04',
-  'stages':       '05',
-  'realisations': '06',
-  'veille':       '07',
-  'contact':      '08',
-};
+function initStars() {
+  stars = [];
+  const count = Math.floor((canvas.width * canvas.height) / 8000);
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x:       Math.random() * canvas.width,
+      y:       Math.random() * canvas.height,
+      r:       Math.random() * 1.4 + 0.2,
+      phase:   Math.random() * Math.PI * 2,
+      speed:   Math.random() * 0.006 + 0.002,
+      opacity: Math.random() * 0.6 + 0.1,
+    });
+  }
+}
 
-Object.entries(sectionNums).forEach(([id, num]) => {
-  const sec = document.getElementById(id);
-  if (sec) sec.setAttribute('data-num', num);
-});
+let animTime = 0;
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  animTime += 0.016;
+  stars.forEach(s => {
+    const op = s.opacity * (0.5 + 0.5 * Math.sin(animTime * s.speed * 60 + s.phase));
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${op})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
 
-/* ── Navigation : scroll shadow + lien actif ── */
+resizeCanvas();
+initStars();
+drawStars();
+
+window.addEventListener('resize', () => {
+  resizeCanvas();
+  initStars();
+}, { passive: true });
+
+/* ══════════════════════════════════════════════════════════
+   2. NAVIGATION — scroll shadow + lien actif
+══════════════════════════════════════════════════════════ */
 const navbar   = document.getElementById('navbar');
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 
 window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 10);
+  // Shadow sur la navbar
+  navbar.classList.toggle('scrolled', window.scrollY > 20);
 
+  // Lien actif selon la section visible
   let current = '';
   sections.forEach(sec => {
-    if (window.scrollY >= sec.offsetTop - 100) current = sec.getAttribute('id');
+    if (window.scrollY >= sec.offsetTop - 120) {
+      current = sec.getAttribute('id');
+    }
   });
 
   navLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === `#${current}`);
+    const href = link.getAttribute('href').replace('#', '');
+    link.classList.toggle('active', href === current);
   });
 }, { passive: true });
 
-/* ── Burger menu ── */
+/* ══════════════════════════════════════════════════════════
+   3. BURGER MENU MOBILE
+══════════════════════════════════════════════════════════ */
 const burger  = document.getElementById('burger');
 const navMenu = document.getElementById('nav-links');
 
 burger.addEventListener('click', () => {
   const open = navMenu.classList.toggle('open');
   burger.classList.toggle('open', open);
+  burger.setAttribute('aria-expanded', String(open));
 });
 
+// Fermer au clic sur un lien
 navMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     navMenu.classList.remove('open');
     burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
   });
 });
 
-/* ── Timeline ── */
-const timelineItems = document.querySelectorAll('.timeline-item');
+/* ══════════════════════════════════════════════════════════
+   4. REVEAL AU SCROLL (Intersection Observer)
+══════════════════════════════════════════════════════════ */
+const revealEls = document.querySelectorAll('.reveal');
 
-const tlObserver = new IntersectionObserver(entries => {
+const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), i * 130);
-      tlObserver.unobserve(entry.target);
+      // Délai en cascade pour les éléments d'une même passe
+      const delay = (i % 4) * 100;
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, delay);
+      revealObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.15 });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-timelineItems.forEach(item => tlObserver.observe(item));
+revealEls.forEach(el => revealObserver.observe(el));
 
-/* ── Animation d'entrée générale ── */
-const animTargets = document.querySelectorAll(
-  '.skills-group, .stage-card, .project-card, .certif-card, .veille-theme, .bts-card'
-);
+/* ══════════════════════════════════════════════════════════
+   5. TIMELINE — apparition progressive
+══════════════════════════════════════════════════════════ */
+const timelineEntries = document.querySelectorAll('.timeline-entry');
 
-const animObs = new IntersectionObserver(entries => {
+const tlObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
     if (entry.isIntersecting) {
       setTimeout(() => {
-        entry.target.style.opacity   = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }, i * 75);
-      animObs.unobserve(entry.target);
+        entry.target.classList.add('visible');
+      }, i * 150);
+      tlObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.08 });
+}, { threshold: 0.1 });
 
-animTargets.forEach(el => {
-  el.style.opacity    = '0';
-  el.style.transform  = 'translateY(14px)';
-  el.style.transition = 'opacity .5s ease, transform .5s ease';
-  animObs.observe(el);
-});
+timelineEntries.forEach(el => tlObserver.observe(el));
 
-/* ── Formulaire ── */
+/* ══════════════════════════════════════════════════════════
+   6. FORMULAIRE CONTACT — feedback visuel
+══════════════════════════════════════════════════════════ */
 const form   = document.getElementById('contact-form');
 const notice = document.getElementById('form-notice');
 
 if (form) {
   form.addEventListener('submit', e => {
     e.preventDefault();
-    notice.textContent = '> Message envoyé. Je vous répondrai bientôt.';
-    notice.style.color = '#00ff87';
+    notice.textContent = '✓ Message envoyé ! Je vous répondrai dans les plus brefs délais.';
+    notice.style.color = '#34d399';
     form.reset();
-    setTimeout(() => { notice.textContent = ''; }, 5000);
+    setTimeout(() => { notice.textContent = ''; }, 6000);
   });
 }
+
+/* ══════════════════════════════════════════════════════════
+   7. HOVER sur les cartes projets — léger parallaxe
+══════════════════════════════════════════════════════════ */
+document.querySelectorAll('.glass-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect   = card.getBoundingClientRect();
+    const x      = (e.clientX - rect.left) / rect.width  - 0.5;
+    const y      = (e.clientY - rect.top)  / rect.height - 0.5;
+    const rotX   = y * -5;
+    const rotY   = x *  5;
+    card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-4px)`;
+  });
+
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.transition = 'transform .4s ease, border-color .3s ease, background .3s ease';
+  });
+
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'transform .1s ease, border-color .3s ease, background .3s ease';
+  });
+});
