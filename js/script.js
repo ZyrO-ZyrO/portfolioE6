@@ -353,3 +353,28 @@ document.addEventListener('click', e => {
     openCertifModal(imgSrc, name);
   }
 });
+
+function revealAndCopyEmail() {
+  const emailEl = document.getElementById('email-value');
+  const copyLabel = document.getElementById('copy-label');
+  
+  // Reconstitue le mail à partir des attributs data pour contrer les bots
+  const user = emailEl.getAttribute('data-user');
+  const domain = emailEl.getAttribute('data-domain');
+  const realEmail = user + '@' + domain;
+
+  // Révèle le mail à l'écran
+  emailEl.textContent = realEmail;
+
+  // Copie le mail dans le presse-papier
+  navigator.clipboard.writeText(realEmail).then(() => {
+    copyLabel.textContent = 'Copié !';
+    
+    // Remet le texte "Copier" après 2 secondes
+    setTimeout(() => {
+      copyLabel.textContent = 'Copier';
+    }, 2000);
+  }).catch(err => {
+    console.error('Erreur lors de la copie :', err);
+  });
+}
