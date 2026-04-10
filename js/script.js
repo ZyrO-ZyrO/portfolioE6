@@ -299,28 +299,56 @@ window.copyEmail = () => {
 /* ══════════════════════════════════════════════════════════
    MODAL IMAGE CERTIF
 ══════════════════════════════════════════════════════════ */
-const certifModal     = document.getElementById('certif-modal');
-const certifModalImg  = document.getElementById('certif-modal-img');
-const certifModalPH   = document.getElementById('certif-modal-placeholder');
+/* ══════════════════════════════════════════════════════════
+   MODAL IMAGE CERTIF
+══════════════════════════════════════════════════════════ */
+const certifModal      = document.getElementById('certif-modal');
+const certifModalImg   = document.getElementById('certif-modal-img');
+const certifModalPH    = document.getElementById('certif-modal-placeholder');
 const certifModalTitle = document.getElementById('certif-modal-title');
 
 function openCertifModal(imgSrc, name) {
+  // Titre
   certifModalTitle.textContent = name || 'Certification';
-  certifModalImg.src = imgSrc;
-  certifModalImg.alt = name || 'Certification';
 
-  // Afficher l'image si elle charge, sinon placeholder
-  certifModalImg.style.display = 'none';
-  certifModalPH.style.display  = 'block';
+  // Nettoyer iframe PDF si présent
+  const oldIframe = document.getElementById('certif-modal-iframe');
+  if (oldIframe) oldIframe.remove();
 
-  certifModalImg.onload = () => {
-    certifModalImg.style.display = 'block';
+  const isPDF = imgSrc && imgSrc.toLowerCase().endsWith('.pdf');
+
+  if (isPDF) {
+    // Afficher en iframe
+    certifModalImg.style.display = 'none';
     certifModalPH.style.display  = 'none';
-  };
-  certifModalImg.onerror = () => {
+    const iframe = document.createElement('iframe');
+    iframe.id    = 'certif-modal-iframe';
+    iframe.src   = imgSrc;
+    iframe.style.cssText = 'width:100%;height:500px;border:none;border-radius:8px;display:block;';
+    document.querySelector('.certif-modal-body').appendChild(iframe);
+  } else {
+    // Afficher l'image — reset complet d'abord
+    certifModalImg.onload  = null;
+    certifModalImg.onerror = null;
+    certifModalImg.removeAttribute('src');
+
     certifModalImg.style.display = 'none';
     certifModalPH.style.display  = 'block';
-  };
+    certifModalPH.querySelector('p').textContent = 'Chargement…';
+
+    // Charger la nouvelle image
+    certifModalImg.onload = () => {
+      certifModalImg.style.display = 'block';
+      certifModalPH.style.display  = 'none';
+    };
+    certifModalImg.onerror = () => {
+      certifModalImg.style.display = 'none';
+      certifModalPH.style.display  = 'block';
+      certifModalPH.querySelector('p').textContent = '⚠ Image introuvable — vérifie que img/certif/certif.jpg existe.';
+    };
+
+    certifModalImg.src = imgSrc;
+  }
 
   certifModal.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -329,14 +357,19 @@ function openCertifModal(imgSrc, name) {
 window.closeCertifModal = () => {
   certifModal.classList.remove('open');
   document.body.style.overflow = '';
+  const iframe = document.getElementById('certif-modal-iframe');
+  if (iframe) iframe.remove();
+  // Reset image
+  certifModalImg.style.display = 'none';
+  certifModalPH.style.display  = 'none';
 };
 
-// Clic sur l'overlay pour fermer
+// Fermer sur clic overlay
 certifModal.addEventListener('click', e => {
   if (e.target === certifModal) closeCertifModal();
 });
 
-// Touche Escape
+// Fermer sur Escape
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeCertifModal();
@@ -344,37 +377,10 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Délégation de clic sur tous les certif-clickable (même ajoutés dynamiquement)
+// Ouvrir au clic sur un certif-clickable
 document.addEventListener('click', e => {
   const circle = e.target.closest('.certif-clickable');
   if (circle) {
-    const imgSrc = circle.dataset.certifImg;
-    const name   = circle.dataset.certifName;
-    openCertifModal(imgSrc, name);
+    openCertifModal(circle.dataset.certifImg, circle.dataset.certifName);
   }
 });
-
-function revealAndCopyEmail() {
-  const emailEl = document.getElementById('email-value');
-  const copyLabel = document.getElementById('copy-label');
-  
-  // Reconstitue le mail à partir des attributs data pour contrer les bots
-  const user = emailEl.getAttribute('data-user');
-  const domain = emailEl.getAttribute('data-domain');
-  const realEmail = user + '@' + domain;
-
-  // Révèle le mail à l'écran
-  emailEl.textContent = realEmail;
-
-  // Copie le mail dans le presse-papier
-  navigator.clipboard.writeText(realEmail).then(() => {
-    copyLabel.textContent = 'Copié !';
-    
-    // Remet le texte "Copier" après 2 secondes
-    setTimeout(() => {
-      copyLabel.textContent = 'Copier';
-    }, 2000);
-  }).catch(err => {
-    console.error('Erreur lors de la copie :', err);
-  });
-}
