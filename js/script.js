@@ -258,43 +258,6 @@ window.openSourcesModal=()=>{document.getElementById('sources-modal').classList.
 window.closeSourcesModal=()=>{document.getElementById('sources-modal').classList.remove('open')};
 document.getElementById('sources-modal').addEventListener('click',e=>{if(e.target.id==='sources-modal')closeSourcesModal()});
 
-/* ── Email copiable ── */
-window.copyEmail = () => {
-  const email    = document.getElementById('email-value').textContent.trim();
-  const btn      = document.getElementById('copy-btn');
-  const lbl      = document.getElementById('copy-label');
-  const icon     = document.getElementById('copy-icon');
-
-  navigator.clipboard.writeText(email).then(() => {
-    // Feedback visuel
-    btn.classList.add('copied');
-    lbl.textContent = 'Copié !';
-    icon.innerHTML = '<polyline points="20,6 9,17 4,12"/>'; // check icon
-
-    // Particules au niveau du bouton
-    const card = document.getElementById('email-card');
-    const rect  = card.getBoundingClientRect();
-    for(let i=0;i<8;i++){
-      const p=document.createElement('div');p.className='click-particle';
-      const a=(i/8)*Math.PI*2,d=25+Math.random()*20;
-      const h=i%2===0?185:300;const sz=2+Math.random()*3;
-      p.style.cssText=`left:${rect.right-40}px;top:${rect.top+rect.height/2}px;width:${sz}px;height:${sz}px;background:hsl(${h},90%,65%);box-shadow:0 0 ${sz*2}px hsl(${h},90%,65%);--tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d}px`;
-      document.body.appendChild(p);setTimeout(()=>p.remove(),650);
-    }
-
-    // Reset après 2.5s
-    setTimeout(() => {
-      btn.classList.remove('copied');
-      lbl.textContent = 'Copier';
-      icon.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
-    }, 2500);
-  }).catch(() => {
-    // Fallback si clipboard non disponible
-    lbl.textContent = 'Erreur';
-    setTimeout(() => { lbl.textContent = 'Copier'; }, 2000);
-  });
-};
-
 
 /* ══════════════════════════════════════════════════════════
    MODAL IMAGE CERTIF
@@ -384,3 +347,37 @@ document.addEventListener('click', e => {
     openCertifModal(circle.dataset.certifImg, circle.dataset.certifName);
   }
 });
+
+/* ── Email copiable ── */
+window.copyEmail = () => {
+  const email = document.getElementById('email-value').textContent.trim();
+  const btn   = document.getElementById('copy-btn');
+  const lbl   = document.getElementById('copy-label');
+  const icon  = document.getElementById('copy-icon');
+
+  navigator.clipboard.writeText(email).then(() => {
+    btn.classList.add('copied');
+    lbl.textContent = 'Copié !';
+    icon.innerHTML  = '<polyline points="20,6 9,17 4,12"/>';
+
+    // Particules
+    const card = document.getElementById('email-card');
+    const rect  = card.getBoundingClientRect();
+    for (let i = 0; i < 8; i++) {
+      const p = document.createElement('div'); p.className = 'click-particle';
+      const a = (i / 8) * Math.PI * 2, d = 25 + Math.random() * 20;
+      const h = i % 2 === 0 ? 185 : 300; const sz = 2 + Math.random() * 3;
+      p.style.cssText = `left:${rect.right - 40}px;top:${rect.top + rect.height / 2}px;width:${sz}px;height:${sz}px;background:hsl(${h},90%,65%);box-shadow:0 0 ${sz * 2}px hsl(${h},90%,65%);--tx:${Math.cos(a) * d}px;--ty:${Math.sin(a) * d}px`;
+      document.body.appendChild(p); setTimeout(() => p.remove(), 650);
+    }
+
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      lbl.textContent = 'Copier';
+      icon.innerHTML  = '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>';
+    }, 2500);
+  }).catch(() => {
+    lbl.textContent = 'Erreur';
+    setTimeout(() => { lbl.textContent = 'Copier'; }, 2000);
+  });
+};
